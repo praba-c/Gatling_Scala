@@ -13,13 +13,13 @@ class Methods extends Simulation with BasicUtilTests{
 
   val scn: ScenarioBuilder = scenario("Scenario")
     .exec(postPet())
-    .exec(getPet())
-    .exec(updatePet())
+    .exec(getPet(710, 200, true))
+    .exec(updatePet("TestData/updatedPet.json"))
 
   val scn1: ScenarioBuilder = scenario("Scenario 1")
     .exec(deletePet())
     .exec(postPet())
-    .exec(getPet())
+    .exec(getPet(710, 200, true))
   setUp(
     scn.inject(atOnceUsers(1)).protocols(httpProtocol),
     scn1.inject(atOnceUsers(1)).protocols(httpProtocol)
