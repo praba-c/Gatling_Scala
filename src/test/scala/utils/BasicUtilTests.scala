@@ -3,6 +3,7 @@ package utils
 import io.gatling.http.Predef._
 import io.gatling.core.Predef._
 import io.gatling.core.structure._
+import io.gatling.http.request.builder.HttpRequestBuilder
 
 trait BasicUtilTests {
   def postPet(repeatStatus: Boolean = true, repeatCount: Int = 2): ChainBuilder = {
@@ -21,22 +22,13 @@ trait BasicUtilTests {
   }
 
   def getPet(petId: Int, statusCode: Int, repeatStatus: Boolean): ChainBuilder = {
-    val getRequest = exec(
+    val getRequest =
       http("Get")
         .get(s"/v2/pet/${petId}")
         .check(status.is(statusCode))
         .check(status.saveAs("statusCode"))
-    ).exec { session =>
-      println("STATUS CODE " + session("statusCode").as[Int])
-      session
-    }
-    if (repeatStatus) {
-      repeat(2) {
-        getRequest
-      }
-    } else {
-      getRequest
-    }
+
+    requestToBuild(getRequest, repeatStatus, 2);
   }
 
   def updatePet(filePath: String): ChainBuilder = {
@@ -53,5 +45,15 @@ trait BasicUtilTests {
         .delete(s"/v2/pet/${petId}")
         .check(status is statusCode)
     )
+  }
+
+  def requestToBuild(request: HttpRequestBuilder, needRepeatations: Boolean, repeatCount: Int):ChainBuilder={
+    if (needRepeatations) {
+      repeat(2) {
+        exec(request)
+      }
+    } else {
+      exec(request)
+    }
   }
 }

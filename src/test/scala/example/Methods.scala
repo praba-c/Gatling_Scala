@@ -4,12 +4,12 @@ import io.gatling.core.scenario.Simulation
 import io.gatling.http.Predef._
 import io.gatling.core.Predef._
 import io.gatling.core.structure._
-import io.gatling.http.protocol.HttpProtocol
+import io.gatling.http.protocol.{HttpProtocol, HttpProtocolBuilder}
 import utils.BasicUtilTests
 
 class Methods extends Simulation with BasicUtilTests{
 
-  val httpProtocol: HttpProtocol = http.baseUrl("https://petstore.swagger.io")
+  val httpProtocol: HttpProtocolBuilder = http.baseUrl("https://petstore.swagger.io")
 
   val scn: ScenarioBuilder = scenario("Scenario")
     .exec(postPet())
