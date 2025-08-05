@@ -1,10 +1,10 @@
-package example
+package methods
 
-import io.gatling.core.scenario.Simulation
-import io.gatling.http.Predef._
 import io.gatling.core.Predef._
+import io.gatling.core.scenario.Simulation
 import io.gatling.core.structure._
-import io.gatling.http.protocol.{HttpProtocol, HttpProtocolBuilder}
+import io.gatling.http.Predef._
+import io.gatling.http.protocol.HttpProtocolBuilder
 import utils.BasicUtilTests
 
 class Methods extends Simulation with BasicUtilTests{
