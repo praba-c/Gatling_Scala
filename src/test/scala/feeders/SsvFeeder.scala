@@ -10,7 +10,7 @@ import scala.Console.println
 
 class SsvFeeder extends Simulation {
   val httpProtocol: HttpProtocolBuilder = http.baseUrl("https://petstore.swagger.io")
-  val ssvFeeder = ssv("TestData/feeder/petData.ssv")
+  val ssvFeeder = ssv("TestData/feeder/petData.ssv").circular()
 
   def getPet(): ChainBuilder = {
     repeat(2) {

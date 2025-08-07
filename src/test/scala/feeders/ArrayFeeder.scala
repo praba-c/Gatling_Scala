@@ -11,7 +11,7 @@ class ArrayFeeder extends Simulation {
   val httpProtocol: HttpProtocolBuilder = http.baseUrl("http://petstore.swagger.io/")
   val arrayFeeder = array2FeederBuilder(Array(
     Map("id" -> 710, "name" -> "Dog")
-  )).circular()
+  ))
 
   def getPet(): ChainBuilder = {
     feed(arrayFeeder)

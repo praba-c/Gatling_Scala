@@ -11,6 +11,10 @@ class ConstantConcurrentUsers extends Simulation {
 
   val scn: ScenarioBuilder = scenario(name = "Get request")
     .exec(
+      http("Post API").post("/v2/pet")
+        .body(RawFileBody("TestData/pet.json")).asJson
+    )
+    .pause(4).exec(
       http(requestName = "Get API").get("/v2/pet/710")
     )
 
