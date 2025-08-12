@@ -1,17 +1,18 @@
-package feeders
+package simulation.feeders
 
-import io.gatling.core.Predef._
 import io.gatling.core.scenario.Simulation
+import io.gatling.core.Predef._
+import io.gatling.core.feeder.BatchableFeederBuilder
 import io.gatling.core.structure.{ChainBuilder, ScenarioBuilder}
 import io.gatling.http.Predef._
 import io.gatling.http.protocol.HttpProtocolBuilder
 
-class CsvFeeder extends Simulation {
+class CustomFeeder extends Simulation {
   val httpProtocol: HttpProtocolBuilder = http.baseUrl("https://petstore.swagger.io")
-  val csvFeeder = csv("TestData/feeder/petData.csv").circular()
+  val customFeeder: BatchableFeederBuilder[String] = separatedValues("TestData/feeder/petData.txt", '#')
 
   def getPet(): ChainBuilder = {
-    feed(csvFeeder)
+    feed(customFeeder)
       .exec(
         http("get the pet detail for #{id}")
           .get("/v2/pet/#{id}")
@@ -20,7 +21,7 @@ class CsvFeeder extends Simulation {
       )
   }
 
-  val scn: ScenarioBuilder = scenario("Get the data from CSV").exec(getPet())
+  val scn: ScenarioBuilder = scenario("Get the data from CustomFeeder").exec(getPet())
 
   setUp(
     scn.inject(atOnceUsers(1)).protocols(httpProtocol)

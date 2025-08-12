@@ -6,7 +6,7 @@ import io.gatling.core.structure._
 import io.gatling.http.request.builder.HttpRequestBuilder
 
 trait BasicUtilTests {
-  def postPet(repeatStatus: Boolean = true, repeatCount: Int = 2): ChainBuilder = {
+  def postPet(repeatStatus: Boolean = false, repeatCount: Int = 2): ChainBuilder = {
     val postRequest = exec(
       http("Post")
         .post("/v2/pet")

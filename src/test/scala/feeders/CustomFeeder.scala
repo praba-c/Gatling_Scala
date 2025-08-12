@@ -1,8 +1,8 @@
 package feeders
 
-import io.gatling.core.scenario.Simulation
 import io.gatling.core.Predef._
 import io.gatling.core.feeder.BatchableFeederBuilder
+import io.gatling.core.scenario.Simulation
 import io.gatling.core.structure.{ChainBuilder, ScenarioBuilder}
 import io.gatling.http.Predef._
 import io.gatling.http.protocol.HttpProtocolBuilder

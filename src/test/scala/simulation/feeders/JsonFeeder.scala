@@ -1,26 +1,26 @@
-package feeders
+package simulation.feeders
 
-import io.gatling.core.Predef._
 import io.gatling.core.scenario.Simulation
+import io.gatling.core.Predef._
 import io.gatling.core.structure.{ChainBuilder, ScenarioBuilder}
 import io.gatling.http.Predef._
 import io.gatling.http.protocol.HttpProtocolBuilder
 
-class CsvFeeder extends Simulation {
+class JsonFeeder extends Simulation {
   val httpProtocol: HttpProtocolBuilder = http.baseUrl("https://petstore.swagger.io")
-  val csvFeeder = csv("TestData/feeder/petData.csv").circular()
+  val jsonFeeder = jsonFile("TestData/feeder/petData.json")
 
   def getPet(): ChainBuilder = {
-    feed(csvFeeder)
+    feed(jsonFeeder)
       .exec(
         http("get the pet detail for #{id}")
           .get("/v2/pet/#{id}")
           .check(status.is(200),
-            jsonPath("$.id")is("#{id}"))
+            jsonPath("$.id").is("#{id}"))
       )
   }
 
-  val scn: ScenarioBuilder = scenario("Get the data from CSV").exec(getPet())
+  val scn: ScenarioBuilder = scenario("Get the data from JSONFeeder").exec(getPet())
 
   setUp(
     scn.inject(atOnceUsers(1)).protocols(httpProtocol)
